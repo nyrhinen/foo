@@ -1,3 +1,8 @@
+"""
+*args
+"""
+
+
 def biggest_number(*args):
     print max(args)
     return max(args)
@@ -15,6 +20,40 @@ def distance_from_zero(arg):
 biggest_number(-20, -5, 5, 100, 5, 7)
 smallest_number(-10, -5, 5, 10, -33)
 distance_from_zero(-88)
+"""
+*args **kwargs
+"""
+def foo(x,y,z):
+    print "x=" + str(x)
+    print "y=" + str(y)
+    print "z=" + str(z)
+
+mylist = [1,2,3]
+foo(*mylist)
+
+mydict = {'x':1,'y':2,'z':3}
+foo(**mydict)
+
+mytuple = (1, 2, 3)
+foo(*mytuple)
+
+
+"""
+def list
+"""
+
+def list_changer(input_list):
+    input_list[0] = 10
+
+input_list = range(1, 10)
+print(input_list)
+input_list[0] = 10
+print(input_list)
+
+test_list = [5, 5, 5]
+list_changer(test_list)
+
+print test_list
 
 """
 Type()
@@ -774,6 +813,228 @@ def compute_bill(food):
     return total
 
 compute_bill(shopping_list)
+
+
+"""
+The concept of having or defining functions inside of a function
+
+print out: 
+
+This is the function 'f'
+I am calling 'g' now:
+Hi, it's me 'g'
+Thanks for calling me
+"""
+def f():
+    
+    def g():
+        print("Hi, it's me 'g'")
+        print("Thanks for calling me")
+        
+    print("This is the function 'f'")
+    print("I am calling 'g' now:")
+    g()
+  
+f()
+
+
+#vAnother example using "proper" return statements in the functions:
+def temperature(t):
+    def celsius2fahrenheit(x):
+        return 9 * x / 5 + 32
+
+    result = "It's " + str(celsius2fahrenheit(t)) + " degrees!" 
+    return result
+
+print(temperature(20))
+# The output: It's 68.0 degrees!
+
+"""
+predicate function, meaning it returns True or False
+"""
+
+def is_even(value):
+    """Return True if *value* is even."""
+    if (value % 2) == 0:
+        print ("even"),value
+    else:
+        print ("odd"), value
+    return (value % 2) == 0
+
+"""
+The magic is in the lines my_predicate = is_even. We bound the name my_predicate to the function itself
+(not the value returned when calling it) and can use it like any "normal" variable.
+Passing it to count_occurrences allows count_occurrences to apply the function to the elements of the list,
+even though it doesn't "know" what my_predicate does.
+It just assumes it's a function that can be called with a single argument and returns True or False.
+
+"""
+
+
+def count_occurrences(target_list, predicate):
+    """Return the number of times applying the callable *predicate* to a
+    list element returns True."""
+    return sum([1 for e in target_list if predicate(e)])
+
+my_predicate = is_even
+my_list = [2, 4, 6, 7, 9, 11, 12, 14]
+result = count_occurrences(my_list, my_predicate)
+print(result)
+
+"""
+"Everything is an object?
+"""
+class Foo(): pass
+
+foo = Foo()
+foo.some_attribute = 'set from foo'
+baz = foo
+print baz.some_attribute
+print(foo)
+print(baz)
+if foo is baz: print ("foo is baz")
+
+"""
+class
+"""
+class Employee:
+    'Common base class for all employees'
+    empCount = 0
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.empCount += 1
+        print  Employee.empCount
+        print self.name
+
+    def displayCount(self):
+        print "Total Employee %d" % Employee.empCount
+
+    def displayEmployee(self):
+        print "Name : ", self.name, ", Salary: ", self.salary, "age :", self.age
+
+"This would create first object of Employee class"
+emp1 = Employee("Zara", 2000)
+"This would create second object of Employee class"
+emp2 = Employee("Manni", 5000)
+"This would create third object of Employee class"
+emp3 = Employee("esko", 4000)
+emp1.age = 7  # Add an 'age' attribute.
+emp2.age = 8
+emp3.age = 5
+
+foo = 10
+print(foo.__add__)
+print (dir(10))
+
+"""
+__main__
+
+"""
+
+#
+from flask import Flask
+app = Flask(__name__)
+
+# URL is /api/test
+
+@app.route("/api/test")
+def hello():
+    return "Hello World!"
+
+# running on http://127.0.0.1.5000
+
+if __name__ == "__main__":
+    app.run()
+
+
+"""
+function 
+"""
+
+def yell(text):
+    return text.upper() + '!'
+
+name = raw_input("What is your name?")
+
+print yell(name)
+
+# All data in a Python program is represented by objects or relations between objects
+# This line doesnt call the function. It takes the function object referenced by yell
+# and creates a second name pointing to it
+
+bark = yell
+
+# call bark function
+
+print bark('wuff')
+
+# Python attaches a string identifier to every function at creation time for
+# debugging purposes. You can access this internal identifier with the __name__ attribute
+# here it is yell
+
+print bark.__name__
+
+# function reference
+
+print bark
+
+# add functions, 1st all upper, then 2nd method then 3rd method
+# Accessing the function objects stored inside the list works like it would with any other type of object:
+
+funcs = [bark, str.lower, str.capitalize]
+print  funcs
+
+for f in funcs:
+    print(f, f('hey there'))
+
+# You can even call a function object stored in the list without assigning it to a variable first
+print funcs[0]('heyho')
+
+# Because functions are objects you can pass them as arguments to other functions.
+# Here you pass the yell function to greet:
+
+print greet(yell)
+
+print greet(whisper)
+
+# Functions that can accept other functions as arguments are also called higher-order functions.
+# The classical example for higher-order functions in Python is the built-in map function. It takes a function
+# and an iterable and calls the function on each element in the iterable, yielding the results as it goes along.
+# map has gone through the entire list and applied the yell function to each element.
+
+print list(map(yell, ['hello', 'hey', 'hi']))
+
+"""
+nested function
+"""
+
+# inner functions whisper and yell now. Notice how they no longer have a text parameter?
+# But somehow they can still access the text parameter defined in the parent function.
+# In fact, they seem to capture and “remember” the value of that argument.
+# Functions that do this are called lexical closures (or just closures, for short)
+# A closure remembers the values from its enclosing lexical scope even when the program flow is no longer in that scope.
+
+def get_speak_func(text, volume):
+    def whisper():
+        return text.lower() + '...'
+    def yell():
+        return text.upper() + '!'
+    if volume > 0.5:
+        return yell
+    else:
+        return whisper
+
+print get_speak_func('Hello, World', 0.7)()
+
+def make_adder(n):
+    def add(x):
+        return x + n
+    return add
+
+print plus_3 = make_adder(3)
+print plus_5 = make_adder(5)
 
 
 
